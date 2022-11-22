@@ -1,0 +1,29 @@
+
+CREATE DATABASE account_db
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+CREATE TABLE IF NOT EXISTS public.account_tb
+(
+    account_id INT NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
+    middlename VARCHAR(50),
+    lastname VARCHAR(50) NOT NULL,
+    department VARCHAR(50) NOT NULL,
+    jobtitle VARCHAR(50) NOT NULL,
+    immediatesupervisor VARCHAR(50) ,
+    username VARCHAR(50) NOT NULL,
+    pswrd VARCHAR(50) NOT NULL,
+    supervisor_id INT,
+    CONSTRAINT account_tb_pkey PRIMARY KEY (account_id),
+    CONSTRAINT account_tb_supervisor_id_fkey FOREIGN KEY (supervisor_id)
+        REFERENCES public.account_tb (account_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
