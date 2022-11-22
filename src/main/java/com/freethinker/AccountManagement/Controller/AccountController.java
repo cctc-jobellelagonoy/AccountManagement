@@ -23,7 +23,6 @@ public class AccountController {
 		return "Welcome to account!";
 	 }
 	
-	
 	//Postman: PUT http://localhost:8282/account/update/{id}
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Account> updateAccount(@PathVariable("id") Integer id, @RequestBody Account account) {

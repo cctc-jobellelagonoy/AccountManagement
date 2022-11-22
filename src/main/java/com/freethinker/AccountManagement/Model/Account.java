@@ -105,7 +105,9 @@ public class Account {
 		
 		if(anotherAccount.getAccountId() != null)
 			this.accountId = anotherAccount.getAccountId();
-		this.supervisorId = anotherAccount.getSupervisorId();
+		
+		if(anotherAccount.getSupervisorId() != null)
+			this.supervisorId = anotherAccount.getSupervisorId();
 		
 		if(anotherAccount.getFirstName() != null)
 			this.firstName = anotherAccount.getFirstName();
