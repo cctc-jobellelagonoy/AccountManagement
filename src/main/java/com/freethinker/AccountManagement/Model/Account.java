@@ -37,8 +37,7 @@ public class Account {
 	@Column(name="pswrd")
 	private String password;
 	
-	public Account() {
-	}
+	
 	
 	public Integer getAccountId() {
 		return accountId;
