@@ -1,5 +1,7 @@
 package com.freethinker.AccountManagement.Controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +38,37 @@ public class AccountController {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
 	}
+	//Added code!	
+	//Postman: GET http://localhost:8080/account/getAccount/{id}
+		@GetMapping("/getAccount/{id}")
+		  public ResponseEntity<Account> getTutorialById(@PathVariable("id") Integer id) {
+			    Optional<Account> accountData = accountRepository.findById(id);
+
+			    if (accountData.isPresent()) {
+			      return new ResponseEntity<>(accountData.get(), HttpStatus.OK);
+			    } else {
+			      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			    }
+			  }
+		
+		//Postman: GET http://localhost:8080/account/getAccounts
+		@GetMapping("/getAccounts")
+		  public ResponseEntity<List<Account>> getAllTutorials(@RequestParam(required = false) String AccountId) {
+		    try {
+		      List<Account> accountData = new ArrayList<Account>();
+
+		      if (AccountId == null)
+		    	  accountRepository.findAll().forEach(accountData::add);
+		      else
+		    	  accountRepository.findByAccountIdContaining(AccountId).forEach(accountData::add);
+
+		      if (accountData.isEmpty()) {
+		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		      }
+
+		      return new ResponseEntity<>(accountData, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+		  }
 }
