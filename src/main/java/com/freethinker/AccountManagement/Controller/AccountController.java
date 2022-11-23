@@ -25,7 +25,7 @@ public class AccountController {
 		return "Welcome to account!";
 	 }
 	
-	//Postman: PUT http://localhost:8282/account/update/{id}
+	//Postman: PUT http://localhost:<PORT>/account/update/{id}
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Account> updateAccount(@PathVariable("id") Integer id, @RequestBody Account account) {
 		Optional<Account> accountData = accountRepository.findById(id);
@@ -39,7 +39,7 @@ public class AccountController {
 	    }
 	}
 	//Added code!	
-	//Postman: GET http://localhost:8080/account/getAccount/{id}
+	//Postman: GET http://localhost:<PORT>/account/getAccount/{id}
 		@GetMapping("/getAccount/{id}")
 		  public ResponseEntity<Account> getTutorialById(@PathVariable("id") Integer id) {
 			    Optional<Account> accountData = accountRepository.findById(id);
@@ -51,7 +51,7 @@ public class AccountController {
 			    }
 			  }
 		
-		//Postman: GET http://localhost:8080/account/getAccounts
+		//Postman: GET http://localhost:<PORT>/account/getAccounts
 		@GetMapping("/getAccounts")
 		  public ResponseEntity<List<Account>> getAllTutorials(@RequestParam(required = false) String AccountId) {
 		    try {
@@ -69,6 +69,17 @@ public class AccountController {
 		      return new ResponseEntity<>(accountData, HttpStatus.OK);
 		    } catch (Exception e) {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+		  }
+		
+		//DELETE http://localhost:<PORT>/account/delete{id}
+		@DeleteMapping("/delete/{id}")
+		  public ResponseEntity<HttpStatus> deleteAccount(@PathVariable("id") Integer id) {
+		    try {
+		      accountRepository.deleteById(id);
+		      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
 		  }
 }
